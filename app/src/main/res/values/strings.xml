@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Drive Facile</string>
+    <string name="title">Drive Facile</string>
+    <string name="introduction">Scegli uno o più file dal telefono o tablet, poi inviali a Google Drive.</string>
+    <string name="choose_files">1. Scegli i file</string>
+    <string name="no_files_selected">Nessun file selezionato.</string>
+    <string name="upload_to_drive">2. Carica su Drive</string>
+    <string name="privacy_note">L’app accede soltanto ai file che scegli. Non richiede il permesso di leggere tutto il dispositivo.</string>
+    <string name="unknown_file">File senza nome</string>
+    <string name="choose_at_least_one">Scegli almeno un file.</string>
+    <string name="choose_drive">Scegli Google Drive</string>
+</resources>
