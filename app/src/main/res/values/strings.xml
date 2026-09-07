@@ -12,7 +12,7 @@
     <string name="choose_files">Scegli i file</string>
     <string name="no_files_selected">Nessun file selezionato.</string>
     <string name="upload_to_drive">Carica su Drive</string>
-    <string name="privacy_note">L'app accede soltanto ai file che scegli. Non richiede il permesso di leggere tutto il dispositivo.</string>
+    <string name="privacy_note">L\'app accede soltanto ai file che scegli. Non richiede il permesso di leggere tutto il dispositivo.</string>
     <string name="privacy_note_v02">Drive Facile accede solo alle cartelle che autorizzi esplicitamente tramite Android. Il permesso può essere revocato dalle impostazioni del dispositivo.</string>
     <string name="unknown_file">File senza nome</string>
     <string name="choose_at_least_one">Scegli almeno un file.</string>
