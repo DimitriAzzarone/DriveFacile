@@ -110,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
 
         StringBuilder names = new StringBuilder();
         for (int i = 0; i < selectedUris.size(); i++) {
-            if (i > 0) names.append('\\n');
+            if (i > 0) names.append('\n');
             names.append(i + 1).append(". ").append(displayName(selectedUris.get(i)));
         }
         selectedFilesText.setText(names.toString());
