@@ -21,14 +21,38 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:text="@string/introduction"
+            android:text="@string/introduction_v02"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Body1" />
+
+        <Button
+            android:id="@+id/chooseFolderButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:text="@string/authorize_folder" />
+
+        <TextView
+            android:id="@+id/authorizedFolderText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/file_list_background"
+            android:padding="16dp"
+            android:text="@string/no_folder_authorized"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body1" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="@string/legacy_section"
+            android:textStyle="bold" />
 
         <Button
             android:id="@+id/chooseFilesButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="28dp"
+            android:layout_marginTop="12dp"
             android:text="@string/choose_files" />
 
         <TextView
@@ -53,7 +77,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="@string/privacy_note"
+            android:text="@string/privacy_note_v02"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Caption" />
     </LinearLayout>
 </ScrollView>

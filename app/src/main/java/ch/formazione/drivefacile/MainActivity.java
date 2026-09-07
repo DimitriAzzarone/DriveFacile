@@ -2,6 +2,7 @@ package ch.formazione.drivefacile;
 
 import android.content.ClipData;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -21,7 +22,11 @@ import java.util.Set;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final String PREFS = "drive_facile_prefs";
+    private static final String KEY_FOLDER_URI = "authorized_folder_uri";
+
     private TextView selectedFilesText;
+    private TextView authorizedFolderText;
     private Button uploadButton;
     private List<Uri> selectedUris = new ArrayList<>();
 
@@ -31,19 +36,69 @@ public class MainActivity extends AppCompatActivity {
                 showSelectedFiles();
             });
 
+    private final ActivityResultLauncher<Uri> folderPicker =
+            registerForActivityResult(new ActivityResultContracts.OpenDocumentTree(), uri -> {
+                if (uri == null) return;
+
+                int flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
+                        | Intent.FLAG_GRANT_WRITE_URI_PERMISSION;
+
+                try {
+                    getContentResolver().takePersistableUriPermission(uri, flags);
+                } catch (SecurityException ex) {
+                    Toast.makeText(this, R.string.folder_permission_error, Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+                getSharedPreferences(PREFS, MODE_PRIVATE)
+                        .edit()
+                        .putString(KEY_FOLDER_URI, uri.toString())
+                        .apply();
+
+                showAuthorizedFolder();
+                Toast.makeText(this, R.string.folder_saved, Toast.LENGTH_SHORT).show();
+            });
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         selectedFilesText = findViewById(R.id.selectedFilesText);
+        authorizedFolderText = findViewById(R.id.authorizedFolderText);
         uploadButton = findViewById(R.id.uploadButton);
+
+        findViewById(R.id.chooseFolderButton).setOnClickListener(view ->
+                folderPicker.launch(null)
+        );
 
         findViewById(R.id.chooseFilesButton).setOnClickListener(view ->
                 filePicker.launch(new String[]{"*/*"})
         );
 
         uploadButton.setOnClickListener(view -> shareFilesWithDrive());
+
+        showAuthorizedFolder();
+    }
+
+    private void showAuthorizedFolder() {
+        SharedPreferences prefs = getSharedPreferences(PREFS, MODE_PRIVATE);
+        String saved = prefs.getString(KEY_FOLDER_URI, null);
+
+        if (saved == null || saved.isEmpty()) {
+            authorizedFolderText.setText(R.string.no_folder_authorized);
+            return;
+        }
+
+        Uri uri = Uri.parse(saved);
+        String label = uri.getLastPathSegment();
+        if (label == null || label.isEmpty()) {
+            label = saved;
+        }
+
+        authorizedFolderText.setText(
+                getString(R.string.authorized_folder_prefix, label)
+        );
     }
 
     private void showSelectedFiles() {
@@ -55,7 +110,8 @@ public class MainActivity extends AppCompatActivity {
 
         StringBuilder names = new StringBuilder();
         for (int i = 0; i < selectedUris.size(); i++) {
-            if (i > 0) names.append('\n');
+            if (i > 0) names.append('
+');
             names.append(i + 1).append(". ").append(displayName(selectedUris.get(i)));
         }
         selectedFilesText.setText(names.toString());
